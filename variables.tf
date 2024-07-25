@@ -7,10 +7,12 @@ variable "specs" {
     tags = string
     cicustom = object({
       user = string
-      network = string
-      metadata = string 
     })
   })
+}
+
+variable "test" {
+  type = map())
 }
 
 variable "cpu" {
