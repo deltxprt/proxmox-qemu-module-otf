@@ -60,3 +60,18 @@ resource "proxmox_vm_qemu" "qemu_vm" {
     model    = var.network.card_model
   }
 }
+
+resource "dns_a_record_set" "a_record" {
+  zone = concat(var.network.dns,".")
+  name = var.specs.name
+  addresses = [ 
+    var.network.ip_address
+   ]
+   ttl = 300
+}
+
+resource "dns_ptr_record" "ptr_record" {
+  zone = concat(split(".", var.network.ip_gateway)[0],".in-addr.arpa")
+  name = split(".",var.network.ip_address)[3]
+  ptr = concat(var.network.dns, ".")
+}
